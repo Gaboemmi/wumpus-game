@@ -1,0 +1,14 @@
+<div class="cave">
+  <div *ngIf="!isVisible" class="darkness"></div>
+  
+  <p class="debug_text" *ngIf="cave.hasWumpus">Wumpus</p>
+  <p class="debug_text" *ngIf="cave.hasPit">Pit</p>
+  <p class="debug_text" *ngIf="cave.hasGold">Gold</p>
+  <p class="debug_text" *ngIf="cave.hasStench">Stench</p>
+  <p class="debug_text" *ngIf="cave.hasBreeze">Breeze</p>
+
+  <!-- <div class="hunter-img-container">
+    <img src="assets/img/hunter/hunter_down.png" alt="">
+  </div> -->
+
+</div>

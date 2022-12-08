@@ -1,0 +1,26 @@
+<div>
+  <h1>Wumpus Game</h1>
+</div>
+
+<div>
+  <form autocomplete="off"
+    [formGroup]="gameForm"
+    (ngSubmit)="startGame()">
+    <div>
+      <label for="">Número de cuevas:</label>
+      <input type="number" formControlName="caves">
+    </div>
+    <div>
+      <label for="">Número de huecos:</label>
+      <input type="number" formControlName="pits">
+    </div>
+    <div>
+      <label for="">Número de flechas:</label>
+      <input type="number" formControlName="arrows">
+    </div>
+    <div>
+      <button type="submit" [disabled]="gameForm.invalid">Iniciar Juego</button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,12 @@
+<div class="container">
+
+  <div id="map">
+
+    <div class="row" *ngFor="let rows of map">
+      <app-cave *ngFor="let cave of rows" [cave]="cave"></app-cave>
+    </div>
+  
+  </div>
+
+</div>
+
