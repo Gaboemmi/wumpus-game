@@ -1,0 +1,23 @@
+
+h1{
+  font-size: 70px;
+}
+
+label{
+  font-size: 25px;
+}
+
+.flex-center{
+  display: flex;
+  justify-content: center;
+}
+
+.flex-between{
+  display: flex;
+  justify-content: space-between;
+}
+
+input{
+  width: 30px;
+  font-size: 20px;
+}

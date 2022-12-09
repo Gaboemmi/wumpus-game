@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     if( this.gameForm.invalid ){ return; }
     const { caves, arrows, pits } = this.gameForm.value;
     this.mapService.initMap(caves,pits);
-    this.hunterService.initHunter(arrows);
+    this.hunterService.initHunter(arrows,caves);
     this.router.navigate(['/game']);
   }
 

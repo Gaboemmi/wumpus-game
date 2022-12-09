@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Cave } from '../models/cave.model';
+import { Hunter } from '../models/hunter.model';
+import { HunterService } from '../services/hunter.service';
 import { MapService } from '../services/map.service';
 
 @Component({
@@ -7,16 +10,44 @@ import { MapService } from '../services/map.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   map: Cave[][] = [];
+  hunterSubscription!: Subscription;
+  hunter!: Hunter;
 
   constructor(
     private mapService: MapService,
+    private hunterService: HunterService,
   ) { }
 
   ngOnInit(): void {
+
+    this.hunterSubscription = this.hunterService.$hunter.subscribe(
+      (hunter:Hunter) => this.hunter = hunter
+    );
+
     this.map = this.mapService.createMap();
+  }
+
+  ngOnDestroy(): void {
+    this.hunterSubscription.unsubscribe();
+  }
+
+  goForward() :void {
+    this.hunterService.goForward();
+  }
+
+  turnLeft() :void {
+    this.hunterService.turnLeft();
+  }
+
+  turnRight() :void {
+    this.hunterService.turnRight();
+  }
+
+  shootArrow() :void {
+    this.hunterService.shootArrow();
   }
 
 }

@@ -23,7 +23,7 @@ export class MapService {
     for (let row = 0; row < this.caves; row++) {
       let newRow = [];
       for (let col = 0; col < this.caves; col++) 
-        newRow.push( new Cave )
+        newRow.push( new Cave({col,row}) )
       newMap.push(newRow);
     }
     this.map = [...newMap];

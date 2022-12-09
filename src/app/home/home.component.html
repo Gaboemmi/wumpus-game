@@ -1,25 +1,31 @@
-<div>
+<div class="flex-center">
   <h1>Wumpus Game</h1>
 </div>
 
-<div>
+<div class="flex-center">
   <form autocomplete="off"
     [formGroup]="gameForm"
     (ngSubmit)="startGame()">
-    <div>
-      <label for="">Número de cuevas:</label>
+    
+    <div class="flex-between" style="margin-bottom: 10px;">
+      <label for=""># Cuevas:</label>
       <input type="number" formControlName="caves">
     </div>
-    <div>
-      <label for="">Número de huecos:</label>
+
+    <div class="flex-between" style="margin-bottom: 10px;">
+      <label for=""># Fosas:</label>
       <input type="number" formControlName="pits">
     </div>
-    <div>
-      <label for="">Número de flechas:</label>
+
+    <div class="flex-between" style="margin-bottom: 10px;">
+      <label for=""># Flechas:</label>
       <input type="number" formControlName="arrows">
     </div>
-    <div>
-      <button type="submit" [disabled]="gameForm.invalid">Iniciar Juego</button>
+
+    <div style="margin-top: 40px;">
+      <button class="btn-xl" type="submit" [disabled]="gameForm.invalid">
+        Iniciar Juego
+      </button>
     </div>
 
   </form>

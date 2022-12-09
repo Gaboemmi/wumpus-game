@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" >
 
   <div id="map">
 
@@ -9,4 +9,26 @@
   </div>
 
 </div>
+<div id="fixed-panel">
+  <div id="info">
+    <div id="info-game">
+      <div> VIDA x 1 </div>
+      <div> ORO x 0 </div>
+      <div> FLECHAS x 0 </div>
+    </div>
+    <div id="notification-panel">
+
+    </div>
+  </div>
+  <div id="controls">
+    <button class="btn-sm" (click)="turnLeft()" [disabled]="!hunter.itsAlive">Girar Izq.</button>
+    <button class="btn-sm" (click)="turnRight()" [disabled]="!hunter.itsAlive">Girar Der.</button>
+    <button class="btn-sm" (click)="goForward()" [disabled]="!hunter.itsAlive">Avanzar</button>
+
+    <button class="btn-sm" (click)="shootArrow()" [disabled]="!hunter.itsAlive">Lanzar Flecha</button>
+    <button class="btn-sm" (click)="shootArrow()" [disabled]="true">Salir</button>
+  </div>
+
+</div>
+
 
