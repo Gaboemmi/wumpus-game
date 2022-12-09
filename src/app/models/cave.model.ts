@@ -1,4 +1,5 @@
-import { PositionDouble } from './../types/custom.types';
+import { PositionDouble } from "../interfaces/custom.interface";
+
 export class Cave {
   
   public position!: PositionDouble;

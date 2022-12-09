@@ -3,7 +3,7 @@
   <div id="map">
 
     <div class="row" *ngFor="let rows of map">
-      <app-cave *ngFor="let cave of rows" [cave]="cave"></app-cave>
+      <app-cave *ngFor="let cave of rows" [cave]="cave" [isVisible]="viewAllCaves"></app-cave>
     </div>
   
   </div>
@@ -12,23 +12,56 @@
 <div id="fixed-panel">
   <div id="info">
     <div id="info-game">
-      <div> VIDA x 1 </div>
-      <div> ORO x 0 </div>
-      <div> FLECHAS x 0 </div>
+      <div> <img class="game-icon" src="assets/img/hart.png" alt=""> x {{ (hunter.itsAlive) ? '1' : '0' }} </div>
+      <div> <img class="game-icon" src="assets/img/gold.png" alt=""> x {{ hunter.inventory.length }} </div>
+      <div> <img class="game-icon" src="assets/img/arrow.png" alt=""> x {{ hunter.arrows }} </div>
     </div>
     <div id="notification-panel">
-
+      
     </div>
   </div>
   <div id="controls">
-    <button class="btn-sm" (click)="turnLeft()" [disabled]="!hunter.itsAlive">Girar Izq.</button>
-    <button class="btn-sm" (click)="turnRight()" [disabled]="!hunter.itsAlive">Girar Der.</button>
-    <button class="btn-sm" (click)="goForward()" [disabled]="!hunter.itsAlive">Avanzar</button>
+    <button class="btn-sm" (click)="turnLeft()" [disabled]="!hunter.itsAlive">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+    <button class="btn-sm" (click)="turnRight()" [disabled]="!hunter.itsAlive">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+    <button class="btn-sm" (click)="goForward()" [disabled]="!hunter.itsAlive">
+      Avanzar &nbsp;&nbsp;  <i class="fa-solid fa-person-walking-arrow-right"></i>
+    </button>
 
-    <button class="btn-sm" (click)="shootArrow()" [disabled]="!hunter.itsAlive">Lanzar Flecha</button>
-    <button class="btn-sm" (click)="shootArrow()" [disabled]="true">Salir</button>
+    <button class="btn-sm" (click)="shootArrow()" [disabled]="!hunter.itsAlive">
+      Lanzar&nbsp;&nbsp;&nbsp;&nbsp;Flecha &nbsp;&nbsp; <i class="fa-solid fa-bullseye"></i>
+    </button>
+    <button class="btn-sm" (click)="getOutWithTheGold()" [disabled]="!(hunter.position.col === 0 && hunter.position.row === 0)">
+      Salir &nbsp;&nbsp; <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
   </div>
+  <div id="others-tools">
+    <button class="btn-sm" routerLink="/home">
+      Home
+    </button>
+  </div>
+</div>
 
+<div class="dark-over" *ngIf="!hunter.itsAlive || !hunter.inMaze">
+  <div class="modal">
+
+    <ng-container *ngIf="!hunter.itsAlive">
+      <h1 class="modal-title danger">GAME OVER</h1>
+      <h2>HAS MUERTO</h2>
+    </ng-container>
+      
+    <ng-container *ngIf="!hunter.inMaze">
+      <h1 class="modal-title success">¡HAS GANADO!</h1>
+      <h3>Lo has conseguido</h3>
+    </ng-container>
+    
+    <button class="btn-sm" routerLink="/home">
+      Volver&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;jugar
+    </button>
+  </div>
 </div>
 
 

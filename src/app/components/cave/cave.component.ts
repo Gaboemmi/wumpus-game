@@ -1,10 +1,10 @@
 import { Cave } from './../../models/cave.model';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { HunterService } from 'src/app/services/hunter.service';
 import { filter, map, Subscription, tap } from 'rxjs';
 import { Hunter } from 'src/app/models/hunter.model';
 import { Wumpus } from 'src/app/models/wumpus.model';
-import { PositionDouble } from 'src/app/types/custom.types';
+import { PositionArrow } from 'src/app/interfaces/custom.interface';
 
 @Component({
   selector: 'app-cave',
@@ -14,8 +14,8 @@ import { PositionDouble } from 'src/app/types/custom.types';
 export class CaveComponent implements OnInit, OnDestroy {
   
   @Input() cave!: Cave;
+  @Input() isVisible: boolean = true;
 
-  isVisible: boolean = false;
   hunter: Hunter | null = null;
   wumpus!: Wumpus;
   showArrow: boolean = false;
@@ -53,11 +53,14 @@ export class CaveComponent implements OnInit, OnDestroy {
       )
     )
     .subscribe(
-      (position:PositionDouble|null) => {
+      (positionArrow:PositionArrow) => {
         this.showArrow = true;
         if( this.cave.hasWumpus ){
           this.wumpus.itsAlive = false;
-          alert('MATASTE A WUMPUS')
+          alert('MATASTE A WUMPUS');
+        }else{
+          console.log('advanceArrow',positionArrow);
+          this.hunterService.advanceArrowToNextCave();
         }
       }
     )
@@ -79,13 +82,13 @@ export class CaveComponent implements OnInit, OnDestroy {
     if( this.cave.hasWumpus ){
       if( this.wumpus?.itsAlive ){
         this.hunterService.demise();
-        alert('WUMPUS TE HA MATADO')
+        alert('WUMPUS TE HA MATADO');
       }
     }
 
     if( this.cave.hasPit ){
       this.hunterService.demise();
-      alert('HAS CAIDO EN UN FOSO')
+      alert('HAS CAIDO EN UN FOSO');
     }
     
   }

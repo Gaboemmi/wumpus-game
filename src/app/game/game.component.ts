@@ -15,6 +15,7 @@ export class GameComponent implements OnInit, OnDestroy {
   map: Cave[][] = [];
   hunterSubscription!: Subscription;
   hunter!: Hunter;
+  viewAllCaves: boolean = false;
 
   constructor(
     private mapService: MapService,
@@ -23,11 +24,17 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.map = this.mapService.createMap();
+
     this.hunterSubscription = this.hunterService.$hunter.subscribe(
-      (hunter:Hunter) => this.hunter = hunter
+      (hunter:Hunter) => {
+        this.hunter = hunter;
+        if(hunter.itsAlive === false || hunter.inMaze === false){
+          this.viewAllCaves = true;
+        }
+      }
     );
 
-    this.map = this.mapService.createMap();
   }
 
   ngOnDestroy(): void {
@@ -48,6 +55,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   shootArrow() :void {
     this.hunterService.shootArrow();
+  }
+
+  getOutWithTheGold(){
+    this.hunterService.getOut();
   }
 
 }

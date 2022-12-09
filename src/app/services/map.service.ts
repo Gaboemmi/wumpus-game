@@ -1,6 +1,6 @@
 import { Cave } from './../models/cave.model';
 import { Injectable } from '@angular/core';
-import { PositionDouble } from '../types/custom.types';
+import { PositionDouble } from '../interfaces/custom.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,16 @@ export class MapService {
   map: Cave[][] = [];
   caves: number = 0;
   pits: number = 0;
+  isInitGame: boolean = false;
 
   constructor() { }
 
+  isInit(){
+    return this.isInitGame;
+  }
+
   initMap(caves: any = 4, pits: any = 1){
+    this.isInitGame = true;
     this.caves = caves;
     this.pits = pits;
   }

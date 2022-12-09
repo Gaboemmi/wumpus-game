@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { PositionArrow, PositionDouble } from '../interfaces/custom.interface';
 import { Hunter } from '../models/hunter.model';
-import { DirectionHunter, PositionDouble } from '../types/custom.types';
+import { DirectionMap } from '../types/custom.types';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,10 @@ export class HunterService {
   private hunter = new BehaviorSubject<Hunter>(new Hunter)
   $hunter = this.hunter.asObservable();
 
-  private positionArrow = new BehaviorSubject<PositionDouble|null>(null)
+  private positionArrow = new BehaviorSubject<any>(null)
   $positionArrow = this.positionArrow.asObservable();
 
   limitCaveMap: number = 0;
-
-  constructor(
-  ) {}
 
   initHunter( amountOfArrows: any = 0, limitCaveMap: any = 1 ){
     this.hunter.next({...new Hunter(amountOfArrows) });
@@ -25,7 +23,7 @@ export class HunterService {
   }
 
   turnLeft(){
-    let direction: DirectionHunter = 'UP';
+    let direction: DirectionMap = 'UP';
     switch (this.hunter.value.direction) {
       case 'DOWN':  direction = 'LEFT' ; break;
       case 'UP':    direction = 'RIGHT'; break;
@@ -36,7 +34,7 @@ export class HunterService {
   }
 
   turnRight(){
-    let direction: DirectionHunter = 'UP';
+    let direction: DirectionMap = 'UP';
     switch (this.hunter.value.direction) {
       case 'DOWN':  direction = 'RIGHT'; break;
       case 'UP':    direction = 'LEFT' ; break;
@@ -59,7 +57,7 @@ export class HunterService {
     ){
       this.hunter.next({...this.hunter.value, position:{...position} });
     }else{
-      alert('PARED')
+      alert('CHOQUE CON PARED')
     }
   }
 
@@ -73,33 +71,39 @@ export class HunterService {
     }
 
     this.hunter.next({...this.hunter.value, arrows: (hunterArrows - 1) });
+    this.positionArrow.next({...this.hunter.value.position, direction: this.hunter.value.direction});
+    
+  }
 
-    let startPosition = { ...this.hunter.value.position };
-    const initDireccion = this.hunter.value.direction;
-
-    let next = true;
-    while (next) {
-      let positionArrow: any = startPosition;
-      switch (initDireccion) {
-        case 'DOWN':  positionArrow.row = positionArrow.row+1 ; break;
-        case 'UP':    positionArrow.row = positionArrow.row-1 ; break;
-        case 'LEFT':  positionArrow.col = positionArrow.col-1 ; break;
-        case 'RIGHT': positionArrow.col = positionArrow.col+1 ; break;
-      } 
-      if( (positionArrow.col >= 0 && positionArrow.col <= this.limitCaveMap) && 
-          (positionArrow.row >= 0 && positionArrow.row <= this.limitCaveMap)
-      ){
-        this.positionArrow.next({...positionArrow});
-      }else{
-        next = false;
-        alert('HAS FAllADO');
-      }
+  advanceArrowToNextCave(){
+    let positionArrow = {...this.positionArrow.value};
+    switch (this.positionArrow.value.direction) {
+      case 'DOWN':  positionArrow.row = positionArrow.row+1 ; break;
+      case 'UP':    positionArrow.row = positionArrow.row-1 ; break;
+      case 'LEFT':  positionArrow.col = positionArrow.col-1 ; break;
+      case 'RIGHT': positionArrow.col = positionArrow.col+1 ; break;
+    } 
+    if( (positionArrow.col >= 0 && positionArrow.col <= this.limitCaveMap) && 
+        (positionArrow.row >= 0 && positionArrow.row <= this.limitCaveMap)
+    ){
+      this.positionArrow.next({...positionArrow});
+    }else{
+      alert('HAS FAllADO');
     }
-
   }
 
   collectTheGold(){
-    this.hunter.next({...this.hunter.value, inventory: [...'GOLD'] });
+    this.hunter.next({...this.hunter.value, inventory: ['GOLD'] });
+  }
+
+  getOut(){
+    const inventory = [...this.hunter.value.inventory];
+    const hunterPosition = {...this.hunter.value.position};
+    if( inventory.includes('GOLD') && hunterPosition.col === 0 && hunterPosition.row === 0 ){
+      this.hunter.next({...this.hunter.value, inMaze: false });
+    }else{
+      alert('DEBES TENER EL ORO PARA PODER SALIR');
+    }
   }
 
   demise(){
