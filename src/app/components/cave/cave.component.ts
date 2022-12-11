@@ -17,7 +17,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 })
 export class CaveComponent implements OnInit, OnDestroy {
   
-  @Input() cave!: Cave;
+  @Input() cave: Cave = new Cave;
   @Input() isVisible: boolean = true;
 
   hunter: Hunter | null = null;

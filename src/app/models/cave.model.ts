@@ -9,7 +9,7 @@ export class Cave {
   public hasStench: boolean = false;
   public hasBreeze: boolean = false;
 
-  constructor(position:PositionDouble){
+  constructor(position:PositionDouble = {col:0, row:0}){
     this.position = position;
   }
 }
