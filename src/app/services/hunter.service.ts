@@ -1,6 +1,7 @@
+import { NotificationsService } from './notifications.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PositionArrow, PositionDouble } from '../interfaces/custom.interface';
+import { PositionDouble } from '../interfaces/custom.interface';
 import { Hunter } from '../models/hunter.model';
 import { DirectionMap } from '../types/custom.types';
 
@@ -17,13 +18,18 @@ export class HunterService {
 
   limitCaveMap: number = 0;
 
+  constructor(
+    private notificationsService: NotificationsService
+  ){}
+
   initHunter( amountOfArrows: any = 0, limitCaveMap: any = 1 ){
-    this.hunter.next({...new Hunter(amountOfArrows) });
+    this.hunter.next({...new Hunter(amountOfArrows)});
+    this.positionArrow.next(null);
     this.limitCaveMap = limitCaveMap - 1;
   }
 
   turnLeft(){
-    let direction: DirectionMap = 'UP';
+    let direction: DirectionMap;
     switch (this.hunter.value.direction) {
       case 'DOWN':  direction = 'LEFT' ; break;
       case 'UP':    direction = 'RIGHT'; break;
@@ -34,7 +40,7 @@ export class HunterService {
   }
 
   turnRight(){
-    let direction: DirectionMap = 'UP';
+    let direction: DirectionMap;
     switch (this.hunter.value.direction) {
       case 'DOWN':  direction = 'RIGHT'; break;
       case 'UP':    direction = 'LEFT' ; break;
@@ -47,17 +53,17 @@ export class HunterService {
   goForward(){
     let position: PositionDouble = { ...this.hunter.value.position };
     switch (this.hunter.value.direction) {
-      case 'DOWN':  position.row = position.row+1 ; break;
-      case 'UP':    position.row = position.row-1 ; break;
-      case 'LEFT':  position.col = position.col-1 ; break;
-      case 'RIGHT': position.col = position.col+1 ; break;
+      case 'DOWN':  position.row = position.row + 1 ; break;
+      case 'UP':    position.row = position.row - 1 ; break;
+      case 'LEFT':  position.col = position.col - 1 ; break;
+      case 'RIGHT': position.col = position.col + 1 ; break;
     } 
     if( (position.col >= 0 && position.col <= this.limitCaveMap) && 
         (position.row >= 0 && position.row <= this.limitCaveMap)
     ){
       this.hunter.next({...this.hunter.value, position:{...position} });
     }else{
-      alert('CHOQUE CON PARED')
+      this.notificationsService.pushText('CHOQUE CON PARED');
     }
   }
 
@@ -66,7 +72,7 @@ export class HunterService {
     const hunterArrows: number = this.hunter.value.arrows;
 
     if( hunterArrows <= 0 ){
-      alert('NO TIENES MAS FLECHAS')
+      this.notificationsService.pushText('NO TIENES MAS FLECHAS');
       return;
     }
 
@@ -78,17 +84,17 @@ export class HunterService {
   advanceArrowToNextCave(){
     let positionArrow = {...this.positionArrow.value};
     switch (this.positionArrow.value.direction) {
-      case 'DOWN':  positionArrow.row = positionArrow.row+1 ; break;
-      case 'UP':    positionArrow.row = positionArrow.row-1 ; break;
-      case 'LEFT':  positionArrow.col = positionArrow.col-1 ; break;
-      case 'RIGHT': positionArrow.col = positionArrow.col+1 ; break;
+      case 'DOWN':  positionArrow.row = positionArrow.row + 1 ; break;
+      case 'UP':    positionArrow.row = positionArrow.row - 1 ; break;
+      case 'LEFT':  positionArrow.col = positionArrow.col - 1 ; break;
+      case 'RIGHT': positionArrow.col = positionArrow.col + 1 ; break;
     } 
     if( (positionArrow.col >= 0 && positionArrow.col <= this.limitCaveMap) && 
         (positionArrow.row >= 0 && positionArrow.row <= this.limitCaveMap)
     ){
       this.positionArrow.next({...positionArrow});
     }else{
-      alert('HAS FAllADO');
+      this.notificationsService.pushText('HAS FAllADO');
     }
   }
 
@@ -102,7 +108,7 @@ export class HunterService {
     if( inventory.includes('GOLD') && hunterPosition.col === 0 && hunterPosition.row === 0 ){
       this.hunter.next({...this.hunter.value, inMaze: false });
     }else{
-      alert('DEBES TENER EL ORO PARA PODER SALIR');
+      this.notificationsService.pushText('DEBES TENER EL ORO PARA PODER SALIR');
     }
   }
 

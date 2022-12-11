@@ -18,6 +18,13 @@ label{
 }
 
 input{
-  width: 30px;
+  width: 50px;
   font-size: 20px;
+}
+
+.alert-danger > div{
+  text-align: center;
+  padding: 3px;
+  font-size: 20px;
+  color: #bc0000;
 }

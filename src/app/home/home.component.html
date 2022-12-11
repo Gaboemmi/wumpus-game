@@ -1,14 +1,13 @@
 <div class="flex-center">
-  <h1>Wumpus&nbsp;&nbsp;&nbsp;Game</h1>
+  <h1 class="text-primary">Wumpus&nbsp;&nbsp;&nbsp;Game</h1>
 </div>
 
 <div class="flex-center">
-  <form autocomplete="off"
-    [formGroup]="gameForm"
-    (ngSubmit)="startGame()">
+  
+  <form autocomplete="off" [formGroup]="gameForm" (ngSubmit)="startGame()">
     
     <div class="flex-between" style="margin-bottom: 10px;">
-      <label for=""># Cuevas:</label>
+      <label for=""># Celdas:</label>
       <input type="number" formControlName="caves">
     </div>
 
@@ -29,4 +28,35 @@
     </div>
 
   </form>
+</div>
+
+<div class="" style="margin-top: 10px">
+
+  <div *ngIf="caves?.invalid && (caves?.dirty || caves?.touched)" class="alert-danger">
+    <div *ngIf="caves?.errors?.['required']">
+      El número de celdas es obligatorio.
+    </div>
+    <div *ngIf="caves?.errors?.['min'] || caves?.errors?.['max']">
+      Las celdas deben ser mayor que 4 y menor que 50
+    </div>
+  </div>
+
+  <div *ngIf="pits?.invalid && (pits?.dirty || pits?.touched)" class="alert-danger">
+    <div *ngIf="pits?.errors?.['required']">
+      El número de fosas es obligatorio.
+    </div>
+    <div *ngIf="pits?.errors?.['min'] || pits?.errors?.['max']">
+      Las fosas deben ser mayor que 2 y menor que 30
+    </div>
+  </div>
+
+  <div *ngIf="arrows?.invalid && (arrows?.dirty || arrows?.touched)" class="alert-danger">
+    <div *ngIf="arrows?.errors?.['required']">
+      El número de flechas es obligatorio.
+    </div>
+    <div *ngIf="arrows?.errors?.['min'] || arrows?.errors?.['max']">
+      Las flechas deben ser entre 0 y 5
+    </div>
+  </div>
+
 </div>

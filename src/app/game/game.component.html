@@ -17,7 +17,7 @@
       <div> <img class="game-icon" src="assets/img/arrow.png" alt=""> x {{ hunter.arrows }} </div>
     </div>
     <div id="notification-panel">
-      
+      <p class="textbox">{{ $textBox | async }}</p>
     </div>
   </div>
   <div id="controls">
@@ -50,7 +50,7 @@
 
     <ng-container *ngIf="!hunter.itsAlive">
       <h1 class="modal-title danger">GAME OVER</h1>
-      <h2>HAS MUERTO</h2>
+      <h2>{{ $textBox | async }}</h2>
     </ng-container>
       
     <ng-container *ngIf="!hunter.inMaze">

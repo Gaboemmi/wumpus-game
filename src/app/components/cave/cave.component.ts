@@ -1,10 +1,10 @@
 import { Cave } from './../../models/cave.model';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HunterService } from 'src/app/services/hunter.service';
-import { filter, map, Subscription, tap } from 'rxjs';
+import { filter, Subscription, tap } from 'rxjs';
 import { Hunter } from 'src/app/models/hunter.model';
 import { Wumpus } from 'src/app/models/wumpus.model';
-import { PositionArrow } from 'src/app/interfaces/custom.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-cave',
@@ -24,7 +24,8 @@ export class CaveComponent implements OnInit, OnDestroy {
   arrowSubscription!: Subscription;
 
   constructor(
-    private hunterService: HunterService
+    private hunterService: HunterService,
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit(): void {
@@ -51,15 +52,12 @@ export class CaveComponent implements OnInit, OnDestroy {
       filter( (positionArrow:any) => 
         ( positionArrow.col === this.cave.position.col && positionArrow.row === this.cave.position.row )
       )
-    )
-    .subscribe(
-      (positionArrow:PositionArrow) => {
+    ).subscribe(() => {
         this.showArrow = true;
-        if( this.cave.hasWumpus ){
-          this.wumpus.itsAlive = false;
-          alert('MATASTE A WUMPUS');
+        if( this.cave.hasWumpus && this.wumpus.itsAlive){
+          this.wumpus = {...this.wumpus, itsAlive: false};
+          this.notificationsService.pushText('Se ha escuchado un grito');
         }else{
-          console.log('advanceArrow',positionArrow);
           this.hunterService.advanceArrowToNextCave();
         }
       }
@@ -76,20 +74,28 @@ export class CaveComponent implements OnInit, OnDestroy {
     if( this.cave.hasGold ){
       this.cave.hasGold = false;
       this.hunterService.collectTheGold();
-      alert('HAS ENCONTRADO EL ORO')
+      this.notificationsService.pushText('HAS ENCONTRADO EL ORO');
+      return
     }
 
     if( this.cave.hasWumpus ){
-      if( this.wumpus?.itsAlive ){
+      if( this.wumpus?.itsAlive === true ){
         this.hunterService.demise();
-        alert('WUMPUS TE HA MATADO');
+        this.notificationsService.pushText('WUMPUS TE HA MATADO');
+        return
+      }else if(this.wumpus?.itsAlive === false){
+        this.notificationsService.pushText('HAS MATADO AL WUMPUS');
+        return
       }
     }
 
     if( this.cave.hasPit ){
       this.hunterService.demise();
-      alert('HAS CAIDO EN UN FOSO');
+      this.notificationsService.pushText('HAS CAIDO EN UN FOSO');
+      return
     }
+
+    this.notificationsService.pushText('_');
     
   }
 

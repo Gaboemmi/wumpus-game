@@ -11,6 +11,12 @@ import { MapService } from '../services/map.service';
 })
 export class HomeComponent implements OnInit {
 
+  gameForm = this.fb.group({
+    caves:  [8, [ Validators.required, Validators.min(4), Validators.max(50) ] ],
+    pits:   [6, [ Validators.required, Validators.min(2), Validators.max(30) ] ],
+    arrows: [2, [ Validators.required, Validators.min(0), Validators.max(5)  ] ],
+  });
+
   constructor(
     private fb: FormBuilder,
     private hunterService: HunterService,
@@ -18,13 +24,19 @@ export class HomeComponent implements OnInit {
     private router: Router,
   ) { }
 
-  public gameForm = this.fb.group({
-    caves:  [8, [ Validators.required, Validators.min(4), Validators.max(20) ] ],
-    pits:   [6, [ Validators.required, Validators.min(2), Validators.max(20) ] ],
-    arrows: [2, [ Validators.required, Validators.min(0), Validators.max(5) ] ],
-  });
-
   ngOnInit(): void {}
+
+  get caves(){
+    return this.gameForm.get('caves');
+  }
+
+  get pits(){
+    return this.gameForm.get('pits');
+  }
+
+  get arrows(){
+    return this.gameForm.get('arrows');
+  }
 
   startGame(){
     if( this.gameForm.invalid ){ return; }

@@ -1,5 +1,6 @@
+import { NotificationsService } from './../services/notifications.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Cave } from '../models/cave.model';
 import { Hunter } from '../models/hunter.model';
 import { HunterService } from '../services/hunter.service';
@@ -13,18 +14,24 @@ import { MapService } from '../services/map.service';
 export class GameComponent implements OnInit, OnDestroy {
 
   map: Cave[][] = [];
-  hunterSubscription!: Subscription;
   hunter!: Hunter;
   viewAllCaves: boolean = false;
+  $textBox! : Observable<string>;
+  
+  hunterSubscription!: Subscription;
+  notySubscription!: Subscription;
 
   constructor(
     private mapService: MapService,
     private hunterService: HunterService,
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit(): void {
 
     this.map = this.mapService.createMap();
+
+    this.$textBox = this.notificationsService.$noty;
 
     this.hunterSubscription = this.hunterService.$hunter.subscribe(
       (hunter:Hunter) => {
@@ -33,7 +40,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.viewAllCaves = true;
         }
       }
-    );
+    )
 
   }
 

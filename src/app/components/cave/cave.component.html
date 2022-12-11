@@ -1,13 +1,23 @@
-<div class="cave">
+<div class="cave" 
+  [ngStyle]="{'background-image': (cave.position.row === 0 && cave.position.col === 0 ) ? 'url(assets/img/cave_enter.png)' : ''}">
   <div *ngIf="!isVisible" class="darkness"></div>
   
-  <p class="debug_text" *ngIf="cave.hasWumpus">Wumpus</p>
-  <p class="debug_text" *ngIf="cave.hasPit">Pit</p>
-  <p class="debug_text" *ngIf="cave.hasGold">Gold</p>
-  <p class="debug_text" *ngIf="cave.hasStench">Stench</p>
-  <p class="debug_text" *ngIf="cave.hasBreeze">Breeze</p>
+  <div class="item-img-container" *ngIf="wumpus">
+    <img [src]="wumpus | wumpusImg" alt="wumpus">
+  </div>
 
-  <div class="hunter-img-container" *ngIf="hunter">
+  <div class="item-img-container" *ngIf="cave.hasPit">
+    <img src="assets/img/pit.png" alt="pit">
+  </div>
+
+  <div class="item-img-container" *ngIf="cave.hasGold">
+    <img class="img-gold" src="assets/img/gold.png" alt="Gold" >
+  </div>
+
+  <p class="signal-text" *ngIf="cave.hasStench">Hedor</p>
+  <p class="signal-text" *ngIf="cave.hasBreeze">Brisa</p>
+
+  <div class="item-img-container" *ngIf="hunter">
     <img [src]="hunter.direction | avatar" alt="Hunter">
   </div>
 

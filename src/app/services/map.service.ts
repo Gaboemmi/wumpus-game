@@ -1,6 +1,7 @@
 import { Cave } from './../models/cave.model';
 import { Injectable } from '@angular/core';
 import { PositionDouble } from '../interfaces/custom.interface';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class MapService {
   pits: number = 0;
   isInitGame: boolean = false;
 
-  constructor() { }
+  constructor(
+    private notificationsService: NotificationsService
+  ) { }
 
   isInit(){
     return this.isInitGame;
@@ -22,6 +25,7 @@ export class MapService {
     this.isInitGame = true;
     this.caves = caves;
     this.pits = pits;
+    this.notificationsService.pushText('_');
   }
 
   createMap(): Cave[][] {
