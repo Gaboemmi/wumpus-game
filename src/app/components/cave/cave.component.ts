@@ -1,9 +1,13 @@
-import { Cave } from './../../models/cave.model';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { HunterService } from 'src/app/services/hunter.service';
 import { filter, Subscription, tap } from 'rxjs';
+
+// Models
+import { Cave } from './../../models/cave.model';
 import { Hunter } from 'src/app/models/hunter.model';
 import { Wumpus } from 'src/app/models/wumpus.model';
+
+// Services
+import { HunterService } from 'src/app/services/hunter.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({

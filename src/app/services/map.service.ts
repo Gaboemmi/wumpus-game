@@ -1,34 +1,40 @@
 import { Cave } from './../models/cave.model';
 import { Injectable } from '@angular/core';
 import { PositionDouble } from '../interfaces/custom.interface';
-import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  map: Cave[][] = [];
-  caves: number = 0;
-  pits: number = 0;
-  isInitGame: boolean = false;
+  private map: Cave[][] = [];
+  private caves: number = 0;
+  private pits: number = 0;
+  private isInitGame: boolean = false;
 
-  constructor(
-    private notificationsService: NotificationsService
-  ) { }
+  constructor() { }
 
-  isInit(){
+  getMap(): Cave[][]{
+    return this.map;
+  }
+
+  isInit(): boolean{
     return this.isInitGame;
   }
 
   initMap(caves: any = 4, pits: any = 1){
-    this.isInitGame = true;
+    
     this.caves = caves;
     this.pits = pits;
-    this.notificationsService.pushText('_');
+    this.createMap();
+    this.addWumpus();
+    this.addPits();
+    this.addGold();
+    this.isInitGame = true;
+
   }
 
-  createMap(): Cave[][] {
+  createMap() {
     const newMap = [];
     for (let row = 0; row < this.caves; row++) {
       let newRow = [];
@@ -37,15 +43,9 @@ export class MapService {
       newMap.push(newRow);
     }
     this.map = [...newMap];
-
-    this.addWumpus_Stenchs();
-    this.addPits_Breezes();
-    this.addGold();
-
-    return this.map
   }
 
-  addWumpus_Stenchs(): void{
+  addWumpus(): void{
 
     let WumpusPosition!: PositionDouble;
     let isValid = false;
@@ -59,7 +59,7 @@ export class MapService {
     this.addAdjacency(WumpusPosition,'hasStench');
   }
 
-  addPits_Breezes(): void{
+  addPits(): void{
 
     let newPitsPosition!: PositionDouble;
 
@@ -91,13 +91,13 @@ export class MapService {
   }
 
   addAdjacency( position: PositionDouble, key: 'hasStench'| 'hasBreeze'): void{
-    if( position.col-1 >= 0 )
+    if( position.col - 1 >= 0 )
       this.map[position.row][position.col-1][key] = true;
-    if( position.col+1 <= this.caves - 1 )
+    if( position.col + 1 <= this.caves - 1 )
       this.map[position.row][position.col+1][key] = true;
-    if( position.row-1 >= 0)
+    if( position.row - 1 >= 0)
       this.map[position.row-1][position.col][key] = true;
-    if( position.row+1 <= this.caves - 1 )
+    if( position.row + 1 <= this.caves - 1 )
       this.map[position.row+1][position.col][key] = true;
   }
 

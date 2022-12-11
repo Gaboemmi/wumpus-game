@@ -1,7 +1,11 @@
 import { NotificationsService } from './../services/notifications.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
+
+// Models
 import { Cave } from '../models/cave.model';
+
+// Services
 import { Hunter } from '../models/hunter.model';
 import { HunterService } from '../services/hunter.service';
 import { MapService } from '../services/map.service';
@@ -29,7 +33,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.map = this.mapService.createMap();
+    this.map = this.mapService.getMap();
 
     this.$textBox = this.notificationsService.$noty;
 

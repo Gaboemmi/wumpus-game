@@ -1,5 +1,4 @@
-<div class="cave" 
-  [ngStyle]="{'background-image': (cave.position.row === 0 && cave.position.col === 0 ) ? 'url(assets/img/cave_enter.png)' : ''}">
+<div class="cave">
   <div *ngIf="!isVisible" class="darkness"></div>
   
   <div class="item-img-container" *ngIf="wumpus">
@@ -14,6 +13,7 @@
     <img class="img-gold" src="assets/img/gold.png" alt="Gold" >
   </div>
 
+  <p class="signal-text" *ngIf="cave.position.row === 0 && cave.position.col === 0">Salida</p>
   <p class="signal-text" *ngIf="cave.hasStench">Hedor</p>
   <p class="signal-text" *ngIf="cave.hasBreeze">Brisa</p>
 

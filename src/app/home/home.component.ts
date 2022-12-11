@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// Services
 import { HunterService } from '../services/hunter.service';
 import { MapService } from '../services/map.service';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +24,7 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder,
     private hunterService: HunterService,
     private mapService: MapService,
+    private notificationsService: NotificationsService,
     private router: Router,
   ) { }
 
@@ -41,8 +45,11 @@ export class HomeComponent implements OnInit {
   startGame(){
     if( this.gameForm.invalid ){ return; }
     const { caves, arrows, pits } = this.gameForm.value;
-    this.mapService.initMap(caves,pits);
+
     this.hunterService.initHunter(arrows,caves);
+    this.mapService.initMap(caves,pits);
+    this.notificationsService.initText();
+
     this.router.navigate(['/game']);
   }
 

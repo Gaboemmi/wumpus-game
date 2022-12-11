@@ -11,6 +11,10 @@ export class NotificationsService {
 
   constructor() { }
 
+  initText(){
+    this.noty.next('_');
+  }
+
   pushText( string: string){
     this.noty.next(string);
   }
