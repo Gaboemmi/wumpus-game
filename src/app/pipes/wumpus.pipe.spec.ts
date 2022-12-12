@@ -1,7 +1,7 @@
 import { WumpusPipe } from './wumpus.pipe';
 
 describe('WumpusPipe', () => {
-  it('create an instance', () => {
+  it('Crear la instancia', () => {
     const pipe = new WumpusPipe();
     expect(pipe).toBeTruthy();
   });

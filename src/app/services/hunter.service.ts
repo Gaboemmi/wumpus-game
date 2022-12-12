@@ -28,6 +28,10 @@ export class HunterService {
     this.limitCaveMap = limitCaveMap - 1;
   }
 
+  updateHunter(hunter: Hunter){
+    this.hunter.next({...hunter });
+  }
+
   turnLeft(){
     let direction: DirectionMap;
     switch (this.hunter.value.direction) {

@@ -7,10 +7,10 @@ import { PositionDouble } from '../interfaces/custom.interface';
 })
 export class MapService {
 
-  private map: Cave[][] = [];
-  private caves: number = 0;
-  private pits: number = 0;
-  private isInitGame: boolean = false;
+  map: Cave[][] = [];
+  caves: number = 0;
+  pits: number = 0;
+  isInitGame: boolean = false;
 
   constructor() { }
 
@@ -34,7 +34,7 @@ export class MapService {
 
   }
 
-  createMap() {
+  createMap(): void {
     const newMap = [];
     for (let row = 0; row < this.caves; row++) {
       let newRow = [];
@@ -77,7 +77,7 @@ export class MapService {
 
   }
 
-  addGold(){
+  addGold(): void{
 
     let newGoldPosition!: PositionDouble;
     let isValid = false;
@@ -108,7 +108,7 @@ export class MapService {
     }
   } 
 
-  validatePosition( position: PositionDouble, rules: string[] = [] ){
+  validatePosition( position: PositionDouble, rules: string[] = [] ): boolean{
     
     if( rules.includes('startPosition') ){
       if(position.col === 0 && position.row === 0) return false;

@@ -9,7 +9,7 @@ export class Hunter {
   public itsAlive: boolean;
   public inMaze: boolean;
 
-  constructor( arrows: number = 0){
+  constructor( arrows: number = 0 ){
     this.position = {col: 0, row: 0},
     this.direction = 'DOWN';
     this.itsAlive = true;

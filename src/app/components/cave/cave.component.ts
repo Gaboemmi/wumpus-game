@@ -18,11 +18,10 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class CaveComponent implements OnInit, OnDestroy {
   
   @Input() cave: Cave = new Cave;
-  @Input() isVisible: boolean = true;
+  @Input() isVisible: boolean = false;
 
   hunter: Hunter | null = null;
   wumpus!: Wumpus;
-  showArrow: boolean = false;
 
   hunterSubscription!: Subscription;
   arrowSubscription!: Subscription;
@@ -33,6 +32,16 @@ export class CaveComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.getObs();
+
+    if( this.cave.hasWumpus ){
+      this.wumpus = new Wumpus;
+    }
+
+  }
+
+  getObs(){
 
     this.hunterSubscription = this.hunterService.$hunter.pipe(
       tap(() => this.hunter = null ),
@@ -51,13 +60,11 @@ export class CaveComponent implements OnInit, OnDestroy {
     );
 
     this.arrowSubscription = this.hunterService.$positionArrow.pipe(
-      tap(() => this.showArrow = false ),
       filter( (resp:any) => resp !== null ),
       filter( (positionArrow:any) => 
         ( positionArrow.col === this.cave.position.col && positionArrow.row === this.cave.position.row )
       )
     ).subscribe(() => {
-        this.showArrow = true;
         if( this.cave.hasWumpus && this.wumpus.itsAlive){
           this.wumpus = {...this.wumpus, itsAlive: false};
           this.notificationsService.pushText('Se ha escuchado un grito');
@@ -66,10 +73,6 @@ export class CaveComponent implements OnInit, OnDestroy {
         }
       }
     )
-
-    if( this.cave.hasWumpus ){
-      this.wumpus = new Wumpus;
-    }
 
   }
 

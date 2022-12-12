@@ -43,7 +43,9 @@ export class HomeComponent implements OnInit {
   }
 
   startGame(){
+    
     if( this.gameForm.invalid ){ return; }
+
     const { caves, arrows, pits } = this.gameForm.value;
 
     this.hunterService.initHunter(arrows,caves);
@@ -51,6 +53,7 @@ export class HomeComponent implements OnInit {
     this.notificationsService.initText();
 
     this.router.navigate(['/game']);
+    
   }
 
 }

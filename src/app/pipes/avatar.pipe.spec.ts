@@ -1,7 +1,7 @@
 import { AvatarPipe } from './avatar.pipe';
 
 describe('AvatarPipe', () => {
-  it('create an instance', () => {
+  it('Crear la instancia', () => {
     const pipe = new AvatarPipe();
     expect(pipe).toBeTruthy();
   });

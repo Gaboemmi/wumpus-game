@@ -10,7 +10,7 @@ describe('InitGameGuard', () => {
     guard = TestBed.inject(InitGameGuard);
   });
 
-  it('should be created', () => {
+  it('Debe ser creado', () => {
     expect(guard).toBeTruthy();
   });
 });
