@@ -1,17 +1,17 @@
-# WumpusGame
+# Hunt the Wumpus
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
-## Instal Deps
-`npm install`
+A browser-based implementation of the classic Hunt the Wumpus game built with Angular.
 
-## Development server
+This project was created to explore component architecture, state management and game logic while keeping the codebase clean and maintainable.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Build
+- Interactive gameplay
+- Responsive UI
+- Modular architecture
+- Unit tests
+- Clean separation of responsibilities
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Why I built it
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This project focuses on applying software engineering principles to a small but complete application rather than simply recreating a classic game.
