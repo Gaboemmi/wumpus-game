@@ -1,30 +1,126 @@
 
-h1{
-  font-size: 70px;
-}
-
-label{
-  font-size: 25px;
-}
-
-.flex-center{
+.home-page {
+  min-height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
+  padding: 24px;
 }
 
-.flex-between{
+.setup-card {
+  background-color: var(--ui-panel);
+  padding: 32px 40px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.setup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.setup-sprite {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.setup-tagline {
+  font-size: 14px;
+  color: #b8a990;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.form-field {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-input{
-  width: 50px;
+label {
   font-size: 20px;
+  color: #f0e6d3;
 }
 
-.alert-danger > div{
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-step {
+  font-size: 20px;
+  padding: 4px 12px;
+  min-width: 36px;
+  background-color: var(--cave-dark);
+  border-color: var(--accent-gold);
+}
+
+input {
+  width: 56px;
+  font-size: 20px;
+  font-family: 'arcade', sans-serif;
   text-align: center;
-  padding: 3px;
-  font-size: 20px;
-  color: #bc0000;
+  background-color: var(--cave-dark);
+  color: var(--accent-gold);
+  border: 2px solid var(--ui-border);
+  padding: 6px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-actions {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.form-actions .btn-xl {
+  width: 100%;
+  border-color: var(--accent-gold);
+}
+
+.form-errors {
+  margin-top: 12px;
+}
+
+.alert-danger > div {
+  text-align: center;
+  padding: 4px;
+  font-size: 16px;
+  color: #ff6b6b;
+}
+
+@media (max-width: 520px) {
+  .setup-header {
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
 }

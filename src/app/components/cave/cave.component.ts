@@ -18,7 +18,21 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class CaveComponent implements OnInit, OnDestroy {
   
   @Input() cave: Cave = new Cave;
-  @Input() isVisible: boolean = false;
+
+  @Input() set isVisible(value: boolean) {
+    this.revealAll = value;
+  }
+
+  revealAll = false;
+  explored = false;
+
+  get isCellVisible(): boolean {
+    return this.explored || this.revealAll;
+  }
+
+  get isEntrance(): boolean {
+    return this.cave.position.row === 0 && this.cave.position.col === 0;
+  }
 
   hunter: Hunter | null = null;
   wumpus!: Wumpus;
@@ -53,7 +67,7 @@ export class CaveComponent implements OnInit, OnDestroy {
       )
     ).subscribe(
       (hunter:Hunter) => {
-        this.isVisible = true;
+        this.explored = true;
         this.hunter = {...hunter};
         this.reviewCavePossibilities();
       }

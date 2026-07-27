@@ -41,7 +41,7 @@ describe('CaveComponent', () => {
     component.cave = { ...new Cave, position: {col: 2, row: 2} }
     hunterService.updateHunter({...new Hunter, position: {col: 2, row: 2}});
     component.ngOnInit();
-    expect(component.isVisible).toBeTrue()
+    expect(component.explored).toBeTrue()
   });
 
   it('El casador debe coger el Oro si se encuentra en la celda', () => {

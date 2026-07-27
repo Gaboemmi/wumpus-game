@@ -20,8 +20,9 @@ export class GameComponent implements OnInit, OnDestroy {
   map: Cave[][] = [];
   hunter!: Hunter;
   viewAllCaves: boolean = false;
-  $textBox! : Observable<string>;
-  
+  $textBox!: Observable<string>;
+  notificationKey = 0;
+
   hunterSubscription!: Subscription;
   notySubscription!: Subscription;
 
@@ -37,38 +38,51 @@ export class GameComponent implements OnInit, OnDestroy {
 
     this.$textBox = this.notificationsService.$noty;
 
+    this.notySubscription = this.notificationsService.$noty.subscribe(() => {
+      this.notificationKey++;
+    });
+
     this.hunterSubscription = this.hunterService.$hunter.subscribe(
-      (hunter:Hunter) => {
+      (hunter: Hunter) => {
         this.hunter = hunter;
-        if(hunter.itsAlive === false || hunter.inMaze === false){
+        if (hunter.itsAlive === false || hunter.inMaze === false) {
           this.viewAllCaves = true;
         }
       }
-    )
+    );
 
   }
 
   ngOnDestroy(): void {
     this.hunterSubscription.unsubscribe();
+    this.notySubscription.unsubscribe();
   }
 
-  goForward() :void {
+  get cellSize(): number {
+    const size = this.map.length;
+    if (size <= 10) return 80;
+    if (size <= 20) return 48;
+    if (size <= 35) return 36;
+    return 32;
+  }
+
+  goForward(): void {
     this.hunterService.goForward();
   }
 
-  turnLeft() :void {
+  turnLeft(): void {
     this.hunterService.turnLeft();
   }
 
-  turnRight() :void {
+  turnRight(): void {
     this.hunterService.turnRight();
   }
 
-  shootArrow() :void {
+  shootArrow(): void {
     this.hunterService.shootArrow();
   }
 
-  getOutWithTheGold(){
+  getOutWithTheGold() {
     this.hunterService.getOut();
   }
 

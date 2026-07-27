@@ -1,67 +1,96 @@
-<div class="container" >
+<div class="container">
 
-  <div id="map">
+  <div id="map" [style.--cell-size.px]="cellSize">
 
     <div class="row" *ngFor="let rows of map">
       <app-cave *ngFor="let cave of rows" [cave]="cave" [isVisible]="viewAllCaves"></app-cave>
     </div>
-  
+
   </div>
 
 </div>
-<div id="fixed-panel">
+
+<div id="fixed-panel" class="pixel-border">
   <div id="info">
     <div id="info-game">
-      <div> <img class="game-icon" src="assets/img/hart.png" alt=""> x {{ (hunter.itsAlive) ? '1' : '0' }} </div>
-      <div> <img class="game-icon" src="assets/img/gold.png" alt=""> x {{ hunter.inventory.length }} </div>
-      <div> <img class="game-icon" src="assets/img/arrow.png" alt=""> x {{ hunter.arrows }} </div>
+      <div class="stat-item">
+        <img class="game-icon" src="assets/img/hart.png" alt="Vida">
+        <span>x {{ (hunter.itsAlive) ? '1' : '0' }}</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <img class="game-icon" src="assets/img/gold.png" alt="Oro">
+        <span>x {{ hunter.inventory.length }}</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <img class="game-icon" src="assets/img/arrow.png" alt="Flechas">
+        <span>x {{ hunter.arrows }}</span>
+      </div>
     </div>
     <div id="notification-panel">
-      <p class="textbox">{{ $textBox | async }}</p>
+      <p class="textbox" [class.text-flash]="notificationKey">{{ $textBox | async }}</p>
     </div>
   </div>
-  <div id="controls">
-    <button class="btn-sm" (click)="turnLeft()" [disabled]="!hunter.itsAlive">
-      <i class="fa-solid fa-rotate-right"></i>
-    </button>
-    <button class="btn-sm" (click)="turnRight()" [disabled]="!hunter.itsAlive">
-      <i class="fa-solid fa-rotate-left"></i>
-    </button>
-    <button class="btn-sm" (click)="goForward()" [disabled]="!hunter.itsAlive">
-      Avanzar &nbsp;&nbsp;  <i class="fa-solid fa-person-walking-arrow-right"></i>
-    </button>
 
-    <button class="btn-sm" (click)="shootArrow()" [disabled]="!hunter.itsAlive">
-      Lanzar&nbsp;&nbsp;&nbsp;&nbsp;Flecha &nbsp;&nbsp; <i class="fa-solid fa-bullseye"></i>
-    </button>
-    <button class="btn-sm" (click)="getOutWithTheGold()" [disabled]="!(hunter.position.col === 0 && hunter.position.row === 0)">
-      Salir &nbsp;&nbsp; <i class="fa-solid fa-right-from-bracket"></i>
-    </button>
+  <div id="controls">
+    <div class="controls-row">
+      <button class="btn-sm btn-icon" (click)="turnLeft()" [disabled]="!hunter.itsAlive" title="Girar izquierda">
+        &#8630;
+      </button>
+      <button class="btn-sm btn-icon" (click)="turnRight()" [disabled]="!hunter.itsAlive" title="Girar derecha">
+        &#8631;
+      </button>
+      <button class="btn-sm" (click)="goForward()" [disabled]="!hunter.itsAlive">
+        Avanzar &#9654;
+      </button>
+    </div>
+    <div class="controls-row">
+      <button class="btn-sm" (click)="shootArrow()" [disabled]="!hunter.itsAlive">
+        Flecha &#9733;
+      </button>
+      <button class="btn-sm" (click)="getOutWithTheGold()"
+        [disabled]="!(hunter.position.col === 0 && hunter.position.row === 0)">
+        Salir &#10140;
+      </button>
+    </div>
   </div>
+
   <div id="others-tools">
-    <button class="btn-sm" routerLink="/home">
-      Home
-    </button>
+    <button class="btn-sm" routerLink="/home">Home</button>
   </div>
 </div>
 
 <div class="dark-over" *ngIf="!hunter.itsAlive || !hunter.inMaze">
-  <div class="modal">
+  <div class="modal pixel-border"
+    [class.modal--defeat]="!hunter.itsAlive"
+    [class.modal--victory]="!hunter.inMaze">
 
     <ng-container *ngIf="!hunter.itsAlive">
+      <div class="modal-sprite" *ngIf="($textBox | async)?.includes('FOSO')">
+        <img src="assets/img/pit_indie.png" alt="">
+      </div>
+      <div class="modal-sprite" *ngIf="($textBox | async)?.includes('WUMPUS')">
+        <img src="assets/img/wumpus/wumpus.png" alt="">
+      </div>
       <h1 class="modal-title danger">GAME OVER</h1>
-      <h2>{{ $textBox | async }}</h2>
+      <h2 class="modal-message">{{ $textBox | async }}</h2>
     </ng-container>
-      
+
     <ng-container *ngIf="!hunter.inMaze">
+      <div class="modal-sprite modal-sprite--victory">
+        <img src="assets/img/gold.png" alt="">
+        <img src="assets/img/hunter/hunter_down.png" alt="">
+      </div>
+      <div class="confetti" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
       <h1 class="modal-title success">¡HAS GANADO!</h1>
-      <h3>Lo has conseguido</h3>
+      <h3 class="modal-message">Lo has conseguido</h3>
     </ng-container>
-    
-    <button class="btn-sm" routerLink="/home">
-      Volver&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;jugar
+
+    <button class="btn-sm btn-replay" routerLink="/home">
+      Volver a jugar
     </button>
   </div>
 </div>
-
-

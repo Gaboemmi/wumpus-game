@@ -1,62 +1,78 @@
-<div class="flex-center">
-  <h1 class="text-primary">Wumpus&nbsp;&nbsp;&nbsp;Game</h1>
-</div>
-
-<div class="flex-center">
-  
-  <form autocomplete="off" [formGroup]="gameForm" (ngSubmit)="startGame()">
-    
-    <div class="flex-between" style="margin-bottom: 10px;">
-      <label for=""># Celdas:</label>
-      <input type="number" formControlName="caves">
+<div class="home-page">
+  <div class="setup-card pixel-border">
+    <div class="setup-header">
+      <img class="setup-sprite" src="assets/img/wumpus/wumpus.png" alt="Wumpus">
+      <div>
+        <h1 class="text-primary">Wumpus Game</h1>
+        <p class="setup-tagline">Explora la cueva, encuentra el oro y escapa con vida.</p>
+      </div>
+      <img class="setup-sprite" src="assets/img/hunter/hunter_down.png" alt="Cazador">
     </div>
 
-    <div class="flex-between" style="margin-bottom: 10px;">
-      <label for=""># Fosas:</label>
-      <input type="number" formControlName="pits">
-    </div>
+    <form autocomplete="off" [formGroup]="gameForm" (ngSubmit)="startGame()">
 
-    <div class="flex-between" style="margin-bottom: 10px;">
-      <label for=""># Flechas:</label>
-      <input type="number" formControlName="arrows">
-    </div>
+      <div class="form-field">
+        <label for="caves"># Celdas</label>
+        <div class="stepper">
+          <button type="button" class="btn-step" (click)="adjustField('caves', -1)">-</button>
+          <input id="caves" type="number" formControlName="caves">
+          <button type="button" class="btn-step" (click)="adjustField('caves', 1)">+</button>
+        </div>
+      </div>
 
-    <div style="margin-top: 40px;">
-      <button class="btn-xl" type="submit" [disabled]="gameForm.invalid">
-        Iniciar Juego
-      </button>
-    </div>
+      <div class="form-field">
+        <label for="pits"># Fosas</label>
+        <div class="stepper">
+          <button type="button" class="btn-step" (click)="adjustField('pits', -1)">-</button>
+          <input id="pits" type="number" formControlName="pits">
+          <button type="button" class="btn-step" (click)="adjustField('pits', 1)">+</button>
+        </div>
+      </div>
 
-  </form>
-</div>
+      <div class="form-field">
+        <label for="arrows"># Flechas</label>
+        <div class="stepper">
+          <button type="button" class="btn-step" (click)="adjustField('arrows', -1)">-</button>
+          <input id="arrows" type="number" formControlName="arrows">
+          <button type="button" class="btn-step" (click)="adjustField('arrows', 1)">+</button>
+        </div>
+      </div>
 
-<div class="" style="margin-top: 10px">
+      <div class="form-actions">
+        <button class="btn-xl" type="submit" [disabled]="gameForm.invalid">
+          Iniciar Juego
+        </button>
+      </div>
 
-  <div *ngIf="caves?.invalid && (caves?.dirty || caves?.touched)" class="alert-danger">
-    <div *ngIf="caves?.errors?.['required']">
-      El número de celdas es obligatorio.
-    </div>
-    <div *ngIf="caves?.errors?.['min'] || caves?.errors?.['max']">
-      Las celdas deben ser mayor que 4 y menor que 50
+    </form>
+
+    <div class="form-errors">
+      <div *ngIf="caves?.invalid && (caves?.dirty || caves?.touched)" class="alert-danger">
+        <div *ngIf="caves?.errors?.['required']">
+          El número de celdas es obligatorio.
+        </div>
+        <div *ngIf="caves?.errors?.['min'] || caves?.errors?.['max']">
+          Las celdas deben ser mayor que 4 y menor que 50
+        </div>
+      </div>
+
+      <div *ngIf="pits?.invalid && (pits?.dirty || pits?.touched)" class="alert-danger">
+        <div *ngIf="pits?.errors?.['required']">
+          El número de fosas es obligatorio.
+        </div>
+        <div *ngIf="pits?.errors?.['min'] || pits?.errors?.['max']">
+          Las fosas deben ser mayor que 2 y menor que 30
+        </div>
+      </div>
+
+      <div *ngIf="arrows?.invalid && (arrows?.dirty || arrows?.touched)" class="alert-danger">
+        <div *ngIf="arrows?.errors?.['required']">
+          El número de flechas es obligatorio.
+        </div>
+        <div *ngIf="arrows?.errors?.['min'] || arrows?.errors?.['max']">
+          Las flechas deben ser entre 0 y 5
+        </div>
+      </div>
     </div>
   </div>
-
-  <div *ngIf="pits?.invalid && (pits?.dirty || pits?.touched)" class="alert-danger">
-    <div *ngIf="pits?.errors?.['required']">
-      El número de fosas es obligatorio.
-    </div>
-    <div *ngIf="pits?.errors?.['min'] || pits?.errors?.['max']">
-      Las fosas deben ser mayor que 2 y menor que 30
-    </div>
-  </div>
-
-  <div *ngIf="arrows?.invalid && (arrows?.dirty || arrows?.touched)" class="alert-danger">
-    <div *ngIf="arrows?.errors?.['required']">
-      El número de flechas es obligatorio.
-    </div>
-    <div *ngIf="arrows?.errors?.['min'] || arrows?.errors?.['max']">
-      Las flechas deben ser entre 0 y 5
-    </div>
-  </div>
-
 </div>

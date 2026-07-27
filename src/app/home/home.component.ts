@@ -42,6 +42,16 @@ export class HomeComponent implements OnInit {
     return this.gameForm.get('arrows');
   }
 
+  adjustField(field: 'caves' | 'pits' | 'arrows', delta: number): void {
+    const control = this.gameForm.get(field);
+    if (!control) return;
+
+    const current = Number(control.value) || 0;
+    control.setValue(current + delta);
+    control.markAsDirty();
+    control.markAsTouched();
+  }
+
   startGame(){
     
     if( this.gameForm.invalid ){ return; }
