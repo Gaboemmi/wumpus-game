@@ -8,6 +8,18 @@ The cave is initially covered by darkness, so the player must explore it careful
 
 To win, the hunter must collect the gold and return to the starting cave. The game ends if the hunter falls into a pit or encounters the living Wumpus.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/images/wumpus_setup.png" alt="Game setup screen" width="45%">
+  <img src="docs/images/wumpus_start_game.png" alt="Gameplay screen" width="45%">
+</p>
+
+<p align="center">
+  <img src="docs/images/wumpus_victory.png" alt="Victory screen" width="45%">
+  <img src="docs/images/wumpus_gameover.png" alt="Game over screen" width="45%">
+</p>
+
 ## Features
 
 - Configurable game setup:
